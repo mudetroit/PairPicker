@@ -7,8 +7,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox Command="{Binding Command}" CommandParameter="{Binding Name}"/>
-                        <Label Content="{Binding Name}"/>
+                        <CheckBox Content="{Binding Name}" Command="{Binding Command}" CommandParameter="{Binding Name}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
