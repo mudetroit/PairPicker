@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PairPicker", "PairPicker\PairPicker.csproj", "{7E411D66-B49D-42F4-9CB1-62FB05E81827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PairPickerTests", "PairPickerTests\PairPickerTests.csproj", "{51EE9F99-DF50-4ECE-B536-38FA0C504154}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,10 +13,6 @@ Global
 		{7E411D66-B49D-42F4-9CB1-62FB05E81827}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E411D66-B49D-42F4-9CB1-62FB05E81827}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E411D66-B49D-42F4-9CB1-62FB05E81827}.Release|Any CPU.Build.0 = Release|Any CPU
-		{51EE9F99-DF50-4ECE-B536-38FA0C504154}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51EE9F99-DF50-4ECE-B536-38FA0C504154}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{51EE9F99-DF50-4ECE-B536-38FA0C504154}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51EE9F99-DF50-4ECE-B536-38FA0C504154}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
