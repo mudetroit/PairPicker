@@ -10,7 +10,6 @@ namespace PairPicker
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new PairPickerViewModel();
         }
     }
 }
