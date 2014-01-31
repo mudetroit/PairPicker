@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using PairPicker.Properties;
 
 namespace PairPicker
 {
@@ -13,16 +14,12 @@ namespace PairPicker
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         private readonly ICollection<string> _users;
-        private readonly string _path;
         private readonly ICollection<string> _selectedUsers;
-        private readonly FileManager _fileManager;
 
         public PairPickerViewModel()
         {
-            _users = new ObservableCollection<string>(ConfigurationManager.AppSettings["users"].Split(',').Select(u => u.Trim()));
-            _path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\.gitconfig";
+            _users = new ObservableCollection<string>(Settings.Default.Users);
             _selectedUsers = new Collection<string>();
-            _fileManager = new FileManager();
             AddUserCommand = new RelayCommand(AddUser);
         }
 
@@ -46,21 +43,8 @@ namespace PairPicker
 
         private void UpdateConfig()
         {
-            var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var userList = GenerateUserList();
-            configFile.AppSettings.Settings["users"].Value = userList;
-
-            configFile.Save();
-        }
-
-        private string GenerateUserList()
-        {
-            if (_users.Count == 0)
-                return string.Empty;
-            var firstUser = _users.First();
-            var remainingUsers = _users.Except(new List<string> {firstUser});
-
-            return remainingUsers.Aggregate(firstUser, (acc, current) => acc += ", " + current);
+            Settings.Default.Users = _users;
+            Settings.Default.Save();
         }
 
         private void ToggleUser(object nameObject)
@@ -80,24 +64,15 @@ namespace PairPicker
 
         private void UpdateGitInfo()
         {
-            var inLines = _fileManager.LoadFile(_path);
-            var outLines = new List<string>();
-            foreach (var line in inLines)
+            var userString = _selectedUsers.DefaultIfEmpty("msms").Aggregate((acc, entry) => string.IsNullOrEmpty(acc) ? entry : acc + ", " + entry);
+            var arguments = "config --global user.name \"" + userString + "\"";
+            var processInfo = new ProcessStartInfo("git", arguments)
             {
-                if (line.TrimStart().StartsWith("name = "))
-                {
-                    var userString = _selectedUsers.DefaultIfEmpty("msms")
-                        .Aggregate((acc, entry) => string.IsNullOrEmpty(acc) ? entry : acc + ", " + entry);
-                    outLines.Add(string.Format("\tname = {0}", userString));
-                }
-                else
-                {
-                    outLines.Add(line);
-                }
-            }
-            _fileManager.WriteFile(_path, outLines.ToArray());
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                CreateNoWindow = true, 
+            };
+            Process.Start(processInfo);
         }
-
-
     }
 }

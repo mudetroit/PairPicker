@@ -8,6 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Collections;
+using System.Collections.Generic;
+
 namespace PairPicker.Properties
 {
 
@@ -24,6 +27,21 @@ namespace PairPicker.Properties
             get
             {
                 return defaultInstance;
+            }
+        }
+
+
+        [global::System.Configuration.ApplicationScopedSetting]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        public IEnumerable<string> Users
+        {
+            get
+            {
+                return ((IEnumerable<string>)(this["Users"])) ?? new List<string>();
+            }
+            set
+            {
+                this["Users"] = value;
             }
         }
     }
